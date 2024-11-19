@@ -1,0 +1,16 @@
+.user-card {
+    border: 2px solid gray;
+    border-radius: 16px;
+    padding: 10px 20px;
+}
+
+.user-card p {
+    text-transform: uppercase;
+}
+
+.user-card img {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+}
