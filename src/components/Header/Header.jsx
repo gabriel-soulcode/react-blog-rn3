@@ -1,7 +1,7 @@
 function Header() {
     return (
         <header>
-            <h1>Bem-vindo/a ao nosso site.</h1>
+            <h1>Perfil do Usuário</h1>
         </header>
     );
 }

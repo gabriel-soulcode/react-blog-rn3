@@ -1,4 +1,6 @@
 import Header from "./components/Header/Header"
+import UserCard from "./components/UserCard/UserCard"
+import Footer from "./components/Footer/Footer"
 
 function Hello() {
   return <h2>Olá meu amigo. Como vai?</h2>
@@ -7,11 +9,10 @@ function Hello() {
 function App() {
   return (
     <>
-      <h1>Hello World</h1>
-      <Hello />
-      <Hello />
-      <Hello />
       <Header />
+      <UserCard />
+      <UserCard />
+      <Footer />
     </>
   )
 }
