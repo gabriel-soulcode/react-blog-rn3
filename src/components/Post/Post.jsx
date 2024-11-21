@@ -2,10 +2,11 @@ import { useState } from "react";
 import "./style.css";
 import Titulo from "../Titulo/Titulo";
 
-function Post() {
+function Post(props) {
 
     const [curtidas, setCurtidas] = useState(0); // [estado, funcao modificadora]
     const [carregando, setCarregando] = useState(true);
+    const [descurtidas, setDescurtidas] = useState(0);
 
     function adicionarCurtida() {
         setCurtidas(curtidas + 1);
@@ -13,7 +14,7 @@ function Post() {
 
     setTimeout(() => {
         setCarregando(false);
-    }, 5000);
+    }, 3000);
 
     if (carregando) {
         return (
@@ -25,15 +26,22 @@ function Post() {
 
     return (
         <div className="post">
-            <Titulo>SoulCode melhor editech gratuita.</Titulo>
-            <Titulo>Prof Gabriel sabe mais <em>HTML</em> do que Português.</Titulo>
-            <Titulo>Qualquer coisa</Titulo>
+            <Titulo>{props.titulo}</Titulo>
+            <img src={props.imagem} alt="Publicação" width={400} />
+            <p>{props.conteudo}</p>
             <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis possimus eveniet molestias quia dolore ex aut quod deleniti atque, ullam assumenda consequatur? Quia deleniti amet ratione eius soluta dolorum at!
+                <small>{props.autor}</small>
             </p>
             <button onClick={adicionarCurtida}>
                 Curtidas: {curtidas}
             </button>
+            <button onClick={() => {
+                setDescurtidas(descurtidas+1);
+            }}>
+                Descurtidas: {descurtidas}
+            </button>
+
+            {curtidas > 10 ? <p>Post Popular!</p> : null}
         </div>
     );
 }

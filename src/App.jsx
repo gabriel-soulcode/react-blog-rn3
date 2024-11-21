@@ -1,10 +1,5 @@
-import Header from "./components/Header/Header"
-import UserCard from "./components/UserCard/UserCard"
-import Footer from "./components/Footer/Footer"
-import imgJoao from "./assets/joao.jpg";
-import imgMaria from "./assets/maria.jpg";
-import Post from "./components/Post/Post";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home/Home";
 
 function Hello() {
   return <h2>Olá meu amigo. Como vai?</h2>
@@ -12,13 +7,11 @@ function Hello() {
 
 function App() {
   return (
-    <>
-      <Header />
-      <Post />
-      <UserCard avatar={imgMaria} nome="Maria" idade={30} />
-      <UserCard avatar={imgJoao} nome="João" idade={45} ocup="Engenheiro Civil" />
-      <Footer />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
