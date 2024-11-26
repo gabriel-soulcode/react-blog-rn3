@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { buscar, salvar } from "../../firebase/firestore";
+import { buscarUs, editarUs, removerUs, salvarUs } from "../../firebase/firestore";
 import { useEffect, useState } from "react";
 
 function Signup() {
@@ -7,14 +7,29 @@ function Signup() {
     const { handleSubmit, register, reset } = useForm();
 
     async function salvarUsuario(dados) {
-        await salvar(dados);
+        await salvarUs(dados);
         reset();
         buscarUsuarios();
     }
 
     async function buscarUsuarios() {
-        const usuarios = await buscar();
+        const usuarios = await buscarUs();
         setUsuarios(usuarios);
+    }
+
+    async function removerUsuario(id) {
+        await removerUs(id);
+        buscarUsuarios();
+    }
+
+    async function editarUsuario(id) {
+        const nome = window.prompt("Digite o nome:");
+        const email = window.prompt("Digite o email:");
+        if(nome && email) {
+            const dados = { nome, email };
+            await editarUs(id, dados);
+            buscarUsuarios();
+        }
     }
 
     useEffect(() => {
@@ -31,6 +46,17 @@ function Signup() {
                         <tr key={us.id}>
                             <td>{us.id}</td>
                             <td>{us.nome}</td>
+                            <td>{us?.email}</td>
+                            <td>
+                                <button type="button" onClick={() => removerUsuario(us.id)}>
+                                    Excluir
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" onClick={() => editarUsuario(us.id)}>
+                                    Editar
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -55,3 +81,9 @@ function Signup() {
 }
 
 export default Signup;
+
+// CRUD
+// C - Create
+// R - Read
+// U - Update
+// D - Delete
