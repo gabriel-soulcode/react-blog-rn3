@@ -2,21 +2,26 @@ import { useForm } from "react-hook-form";
 import { buscarUs, editarUs, removerUs, salvarUs } from "../../firebase/firestore";
 import { useEffect, useState } from "react";
 import { cadastrar } from "../../firebase/authentication";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
     const [usuarios, setUsuarios] = useState([]);
-    const { handleSubmit, register, reset } = useForm();
+    const { handleSubmit, register } = useForm();
+    const navigate = useNavigate();
 
     async function salvarUsuario({ email, senha, nome }) {
-        const usuario = await cadastrar(email, senha);
-        await salvarUs({
-            email,
-            senha,
-            nome,
-            authId: usuario.uid
-        });
-        reset();
-        buscarUsuarios();
+        try {
+            const usuario = await cadastrar(email, senha);
+            await salvarUs({
+                email, senha, nome,
+                authId: usuario.uid
+            });
+            window.alert("Usuário cadastrado.");
+            navigate("/login");
+        } catch(erro) {
+            window.alert("Algo deu errado.");
+            console.error(erro);
+        }
     }
 
     async function buscarUsuarios() {
@@ -32,7 +37,7 @@ function Signup() {
     async function editarUsuario(id) {
         const nome = window.prompt("Digite o nome:");
         const email = window.prompt("Digite o email:");
-        if(nome && email) {
+        if (nome && email) {
             const dados = { nome, email };
             await editarUs(id, dados);
             buscarUsuarios();
