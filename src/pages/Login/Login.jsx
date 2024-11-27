@@ -1,13 +1,38 @@
 import { useForm } from "react-hook-form";
 import Header from "../../components/Header/Header";
+import { login, loginGoogle } from "../../firebase/authentication";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
 
     const { handleSubmit, register } = useForm();
+    const navigate = useNavigate();
 
-    function enviarFormulario(dados) {
-        console.log("Formulário enviado.");
-        console.log(dados);
+    async function enviarFormulario({ email, senha }) {
+        try {
+            await login(email, senha);
+            window.alert("Acesso permitido!");
+            navigate("/");
+        }
+        catch (erro) {
+            if (erro.code == "auth/invalid-credential") {
+                window.alert("Email ou Senha inválidos.");
+            } else {
+                window.alert("Algo deu errado.");
+            }
+            console.error(erro);
+        }
+    }
+
+    async function entrarComGoogle() {
+        try {
+            await loginGoogle();
+            window.alert("Acesso permitodo (Google).");
+            navigate("/");
+        } catch(erro) {
+            console.error(erro);
+            window.alert("Algo deu errado.")
+        }
     }
 
     return (
@@ -36,6 +61,10 @@ function Login() {
 
                 <button>
                     Entrar
+                </button>
+
+                <button type="button" onClick={entrarComGoogle}>
+                    Entrar com Google
                 </button>
             </form>
         </div>

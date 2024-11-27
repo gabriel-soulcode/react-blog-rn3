@@ -1,13 +1,20 @@
 import { useForm } from "react-hook-form";
 import { buscarUs, editarUs, removerUs, salvarUs } from "../../firebase/firestore";
 import { useEffect, useState } from "react";
+import { cadastrar } from "../../firebase/authentication";
 
 function Signup() {
     const [usuarios, setUsuarios] = useState([]);
     const { handleSubmit, register, reset } = useForm();
 
-    async function salvarUsuario(dados) {
-        await salvarUs(dados);
+    async function salvarUsuario({ email, senha, nome }) {
+        const usuario = await cadastrar(email, senha);
+        await salvarUs({
+            email,
+            senha,
+            nome,
+            authId: usuario.uid
+        });
         reset();
         buscarUsuarios();
     }
