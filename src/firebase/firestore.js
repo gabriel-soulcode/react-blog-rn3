@@ -47,4 +47,42 @@ async function editarUs(id, dados) {
     await updateDoc(documento, dados);
 }
 
-export { salvarUs, buscarUs, removerUs, editarUs };
+async function buscarPst() {
+    const posts = collection(db, "posts");
+    const resultados = await getDocs(posts);
+    const objetos = [];
+    resultados.forEach(doc => {
+        const post = doc.data();
+        post.id = doc.id;
+        objetos.push(post);
+    });
+    return objetos;
+}
+
+async function salvarPst(dados) {
+    const posts = collection(db, "posts");
+    await addDoc(posts, dados);
+}
+
+async function removerPst(id) {
+    const posts = collection(db, "posts");
+    const documento = doc(posts, id);
+    await deleteDoc(documento)
+}
+
+async function editarPst(id, dados) {
+    const posts = collection(db, "posts");
+    const documento = doc(posts, id);
+    await updateDoc(documento, dados);
+}
+
+export {
+    salvarUs,
+    buscarUs,
+    removerUs,
+    editarUs,
+    buscarPst,
+    salvarPst,
+    removerPst,
+    editarPst
+};
