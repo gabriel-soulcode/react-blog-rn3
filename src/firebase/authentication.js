@@ -2,8 +2,10 @@ import {
     createUserWithEmailAndPassword,
     getAuth,
     GoogleAuthProvider,
+    onAuthStateChanged,
     signInWithEmailAndPassword,
-    signInWithPopup
+    signInWithPopup,
+    signOut
 } from "firebase/auth";
 import app from "./firebase.config";
 
@@ -25,4 +27,18 @@ async function cadastrar(email, senha) {
     return credencial.user;
 }
 
-export { login, loginGoogle, cadastrar };
+async function usuarioLogado(alternarUsuario) {
+    onAuthStateChanged(auth, alternarUsuario); // observable
+}
+
+async function logout() {
+    await signOut(auth);
+}
+
+export {
+    login,
+    loginGoogle,
+    cadastrar,
+    usuarioLogado,
+    logout
+};

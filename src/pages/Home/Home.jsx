@@ -4,6 +4,8 @@ import Header from "../../components/Header/Header";
 import Post from "../../components/Post/Post";
 import { buscarPst, salvarPst } from "../../firebase/firestore";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../../context/Auth";
+import { Navigate } from "react-router-dom";
 
 
 function FormPost({ buscarPosts }) {
@@ -43,6 +45,7 @@ function FormPost({ buscarPosts }) {
 function Home() {
 
     const [posts, setPosts] = useState([]);
+    const { autenticado } = useAuth();
 
     async function buscarPosts() {
         const posts = await buscarPst()
@@ -52,6 +55,9 @@ function Home() {
     useEffect(() => {
         buscarPosts();
     }, []);
+
+    // bloqueador
+    if (!autenticado) return <Navigate to="/login" />;
 
     return (
         <div>

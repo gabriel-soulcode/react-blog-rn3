@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { logout } from "../../firebase/authentication";
 
 function Header() {
     return (
@@ -22,6 +23,11 @@ function Header() {
                 </li>
                 <li>
                     <Link to="/signup">Signup</Link>
+                </li>
+                <li>
+                    <button onClick={() => logout()}>
+                        Sair
+                    </button>
                 </li>
             </ul>
         </header>
