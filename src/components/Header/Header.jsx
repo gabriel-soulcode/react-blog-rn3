@@ -1,36 +1,28 @@
 import { Link } from "react-router-dom";
 import { logout } from "../../firebase/authentication";
+import { useAuth } from "../../context/Auth";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
 
 function Header() {
+
+    const { autenticado } = useAuth();
+
     return (
-        <header>
-            <h1>React Blog</h1>
-            <ul>
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/users">Usuários</Link>
-                </li>
-                <li>
-                    <Link to="/sac">SAC</Link>
-                </li>
-                <li>
-                    <Link to="/sobre">Sobre</Link>
-                </li>
-                <li>
-                    <Link to="/login">Login</Link>
-                </li>
-                <li>
-                    <Link to="/signup">Signup</Link>
-                </li>
-                <li>
-                    <button onClick={() => logout()}>
+        <Navbar bg="dark" data-bs-theme="dark">
+            <Container>
+                <Nav className="me-auto">
+                    <Link to="/" className="nav-link">Home</Link>
+                    <Link to="/users" className="nav-link">Usuários</Link>
+                    <Link to="/sac" className="nav-link">SAC</Link>
+                    <Link to="/sobre" className="nav-link">Sobre</Link>
+                    <Link to="/login" className="nav-link">Login</Link>
+                    <Link to="/signup" className="nav-link">Signup</Link>
+                    <Button onClick={() => logout()}>
                         Sair
-                    </button>
-                </li>
-            </ul>
-        </header>
+                    </Button>
+                </Nav>
+            </Container>
+        </Navbar>
     );
 }
 

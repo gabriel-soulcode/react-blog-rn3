@@ -6,7 +6,6 @@ import { editarPst, removerPst } from "../../firebase/firestore";
 function Post(props) {
 
     const [curtidas, setCurtidas] = useState(0); // [estado, funcao modificadora]
-    const [carregando, setCarregando] = useState(true);
     const [descurtidas, setDescurtidas] = useState(0);
 
     async function removerPost() {
@@ -24,18 +23,6 @@ function Post(props) {
 
     function adicionarCurtida() {
         setCurtidas(curtidas + 1);
-    }
-
-    setTimeout(() => {
-        setCarregando(false);
-    }, 3000);
-
-    if (carregando) {
-        return (
-            <div className="post">
-                <p>Carregando...</p>
-            </div>
-        );
     }
 
     return (

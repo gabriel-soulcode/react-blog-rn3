@@ -3,6 +3,7 @@ import Header from "../../components/Header/Header";
 import { login, loginGoogle } from "../../firebase/authentication";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/Auth";
+import { Button } from "react-bootstrap";
 
 function Login() {
 
@@ -61,13 +62,13 @@ function Login() {
                     })} />
                 </div>
 
-                <button>
+                <Button variant="primary" type="submit">
                     Entrar
-                </button>
+                </Button>
 
-                <button type="button" onClick={entrarComGoogle}>
+                <Button variant="dark" type="button" onClick={entrarComGoogle}>
                     Entrar com Google
-                </button>
+                </Button>
             </form>
         </div>
     );

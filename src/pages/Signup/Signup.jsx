@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
-import { buscarUs, editarUs, removerUs, salvarUs } from "../../firebase/firestore";
-import { useEffect, useState } from "react";
+import { salvarUs } from "../../firebase/firestore";
 import { cadastrar } from "../../firebase/authentication";
 import { useNavigate } from "react-router-dom";
+import Header from "../../components/Header/Header";
+import { Button } from "react-bootstrap";
 
 function Signup() {
-    const [usuarios, setUsuarios] = useState([]);
     const { handleSubmit, register } = useForm();
     const navigate = useNavigate();
 
@@ -16,79 +16,35 @@ function Signup() {
                 email, senha, nome,
                 authId: usuario.uid
             });
-            window.alert("Usuário cadastrado.");
             navigate("/login");
-        } catch(erro) {
+        } catch (erro) {
             window.alert("Algo deu errado.");
             console.error(erro);
         }
     }
 
-    async function buscarUsuarios() {
-        const usuarios = await buscarUs();
-        setUsuarios(usuarios);
-    }
-
-    async function removerUsuario(id) {
-        await removerUs(id);
-        buscarUsuarios();
-    }
-
-    async function editarUsuario(id) {
-        const nome = window.prompt("Digite o nome:");
-        const email = window.prompt("Digite o email:");
-        if (nome && email) {
-            const dados = { nome, email };
-            await editarUs(id, dados);
-            buscarUsuarios();
-        }
-    }
-
-    useEffect(() => {
-        buscarUsuarios();
-    }, []);
-
     return (
-        <form onSubmit={handleSubmit(salvarUsuario)}>
+        <div>
+            <Header />
             <h1>Cadastre-se</h1>
 
-            <table border="2">
-                <tbody>
-                    {usuarios.map(us => (
-                        <tr key={us.id}>
-                            <td>{us.id}</td>
-                            <td>{us.nome}</td>
-                            <td>{us?.email}</td>
-                            <td>
-                                <button type="button" onClick={() => removerUsuario(us.id)}>
-                                    Excluir
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" onClick={() => editarUsuario(us.id)}>
-                                    Editar
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <form onSubmit={handleSubmit(salvarUsuario)}>
+                <div>
+                    <label htmlFor="nome">Nome</label>
+                    <input type="text" id="nome" {...register("nome")} />
+                </div>
+                <div>
+                    <label htmlFor="email">Email</label>
+                    <input type="text" id="email" {...register("email")} />
+                </div>
+                <div>
+                    <label htmlFor="senha">Senha</label>
+                    <input type="password" id="senha" {...register("senha")} />
+                </div>
 
-            <div>
-                <label htmlFor="nome">Nome</label>
-                <input type="text" id="nome" {...register("nome")} />
-            </div>
-            <div>
-                <label htmlFor="email">Email</label>
-                <input type="text" id="email" {...register("email")} />
-            </div>
-            <div>
-                <label htmlFor="senha">Senha</label>
-                <input type="password" id="senha" {...register("senha")} />
-            </div>
-
-            <button>Criar</button>
-        </form>
+                <Button type="submit">Criar</Button>
+            </form>
+        </div>
     );
 }
 
