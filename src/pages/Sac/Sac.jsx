@@ -1,3 +1,4 @@
+import { Container } from "react-bootstrap";
 import Footer from "../../components/Footer/Footer";
 import Form from "../../components/Form/Form";
 import Header from "../../components/Header/Header";
@@ -25,20 +26,21 @@ function Sac() {
     return (
         <div>
             <Header />
-            <h1>SAC</h1>
-            <Form />
+            <Container>
+                <h1>SAC</h1>
+                <Form />
 
-            <h2>Perguntas Frequentes</h2>
-            
-            {ajudas.map(ajuda => {
-                return (
-                    <div key={ajuda.pergunta}>
-                        <h3>{ajuda.pergunta}</h3>
-                        <p>{ajuda.resposta}</p>
-                    </div>
-                );
-            })}
+                <h2>Perguntas Frequentes</h2>
 
+                {ajudas.map(ajuda => {
+                    return (
+                        <div key={ajuda.pergunta}>
+                            <h3>{ajuda.pergunta}</h3>
+                            <p>{ajuda.resposta}</p>
+                        </div>
+                    );
+                })}
+            </Container>
             <Footer />
         </div>
     );

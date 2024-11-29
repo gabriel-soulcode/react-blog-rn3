@@ -6,6 +6,7 @@ import { buscarPst, salvarPst } from "../../firebase/firestore";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/Auth";
 import { Navigate } from "react-router-dom";
+import { Button, Container, Form } from "react-bootstrap";
 
 
 function FormPost({ buscarPosts }) {
@@ -16,29 +17,32 @@ function FormPost({ buscarPosts }) {
         await salvarPst(dados);
         buscarPosts();
         reset();
-    } 
+    }
 
     return (
-        <form onSubmit={handleSubmit(salvarPost)}>
-            <div>
-                <label htmlFor="titulo">Titulo</label>
-                <input type="text" id="titulo" {...register("titulo")} />
-            </div>
-            <div>
-                <label htmlFor="conteudo">Conteudo</label>
-                <input type="text" id="conteudo" {...register("conteudo")} />
-            </div>
-            <div>
-                <label htmlFor="autor">Autor</label>
-                <input type="text" id="autor" {...register("autor")} />
-            </div>
-            <div>
-                <label htmlFor="imagem">Imagem</label>
-                <input type="text" id="imagem" {...register("imagem")} />
-            </div>
-            <button>Postar</button>
-        </form>
-    )
+        <Form onSubmit={handleSubmit(salvarPost)}>
+            <Form.Group className="mb-3" controlId="titulo">
+                <Form.Label>Titulo</Form.Label>
+                <Form.Control type="text" {...register("titulo")} />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="conteudo">
+                <Form.Label>Conteudo</Form.Label>
+                <Form.Control type="text" {...register("conteudo")} />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="autor">
+                <Form.Label>Autor</Form.Label>
+                <Form.Control type="text" {...register("autor")} />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="imagem">
+                <Form.Label>Imagem</Form.Label>
+                <Form.Control type="text" {...register("imagem")} />
+            </Form.Group>
+            <Button type="submit">Postar</Button>
+        </Form>
+    );
 }
 
 
@@ -62,15 +66,17 @@ function Home() {
     return (
         <div>
             <Header />
+            <Container>
 
-            <h1>Home</h1>
+                <h1>Home</h1>
 
-            <FormPost buscarPosts={buscarPosts} />
+                <FormPost buscarPosts={buscarPosts} />
 
-            {posts.map(post => {
-                return <Post {...post} key={post.id} buscarPosts={buscarPosts} />
-            })}
+                {posts.map(post => {
+                    return <Post {...post} key={post.id} buscarPosts={buscarPosts} />
+                })}
 
+            </Container>
             <Footer />
         </div>
     )

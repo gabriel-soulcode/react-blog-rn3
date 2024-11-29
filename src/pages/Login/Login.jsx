@@ -3,7 +3,7 @@ import Header from "../../components/Header/Header";
 import { login, loginGoogle } from "../../firebase/authentication";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/Auth";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 
 function Login() {
 
@@ -32,7 +32,7 @@ function Login() {
             await loginGoogle();
             setAutenticado(true);
             navigate("/");
-        } catch(erro) {
+        } catch (erro) {
             console.error(erro);
             window.alert("Algo deu errado.")
         }
@@ -41,35 +41,37 @@ function Login() {
     return (
         <div>
             <Header />
-            <h1>Login</h1>
+            <Container>
+                <h1>Login</h1>
 
-            <form onSubmit={handleSubmit(enviarFormulario)}>
-                <div>
-                    <label htmlFor="email">Email:</label>
-                    <input type="text" id="email" {...register("email", {
-                        required: true,
-                        minLength: 10,
-                        pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-                    })} autoComplete="off" />
-                </div>
+                <form onSubmit={handleSubmit(enviarFormulario)}>
+                    <div>
+                        <label htmlFor="email">Email:</label>
+                        <input type="text" id="email" {...register("email", {
+                            required: true,
+                            minLength: 10,
+                            pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+                        })} autoComplete="off" />
+                    </div>
 
-                <div>
-                    <label htmlFor="senha">Senha:</label>
-                    <input type="password" id="senha" {...register("senha", {
-                        required: true,
-                        minLength: 6,
-                        maxLength: 15
-                    })} />
-                </div>
+                    <div>
+                        <label htmlFor="senha">Senha:</label>
+                        <input type="password" id="senha" {...register("senha", {
+                            required: true,
+                            minLength: 6,
+                            maxLength: 15
+                        })} />
+                    </div>
 
-                <Button variant="primary" type="submit">
-                    Entrar
-                </Button>
+                    <Button variant="primary" type="submit">
+                        Entrar
+                    </Button>
 
-                <Button variant="dark" type="button" onClick={entrarComGoogle}>
-                    Entrar com Google
-                </Button>
-            </form>
+                    <Button variant="dark" type="button" onClick={entrarComGoogle}>
+                        Entrar com Google
+                    </Button>
+                </form>
+            </Container>
         </div>
     );
 }

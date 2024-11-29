@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./style.css";
 import Titulo from "../Titulo/Titulo";
 import { editarPst, removerPst } from "../../firebase/firestore";
+import { Button, Card } from "react-bootstrap";
 
 function Post(props) {
 
@@ -25,43 +26,30 @@ function Post(props) {
         setCurtidas(curtidas + 1);
     }
 
+    function adicionarDescurtida() {
+        setDescurtidas(descurtidas + 1);
+    }
+
     return (
-        <div className="post">
-            <Titulo>{props.titulo}</Titulo>
+        <Card style={{ width: '22rem' }}>
+            <Card.Img variant="top" src={props.imagem} />
+            <Card.Body>
+                <Card.Title>{props.titulo}</Card.Title>
+                <Card.Text>{props.conteudo}</Card.Text>
+                <p className="fw-bold">{props.autor}</p>
+                
+                <Button onClick={adicionarCurtida} variant="primary" size="sm">
+                    Curtidas {curtidas}
+                </Button>
 
-            <img src={props.imagem} alt="Publicação" width={400} />
+                <Button onClick={adicionarDescurtida} variant="dark" size="sm">
+                    Descurtidas {descurtidas}
+                </Button>
 
-            <p>{props.conteudo}</p>
-            <p>
-                <small>{props.autor}</small>
-            </p>
-
-            <button onClick={adicionarCurtida}>
-                Curtidas: {curtidas}
-            </button>
-
-            <button onClick={() => {
-                setDescurtidas(descurtidas + 1);
-            }}>
-                Descurtidas: {descurtidas}
-            </button>
-
-            <button onClick={() => {
-                window.alert(props.conteudo);
-            }}>
-                Detalhes
-            </button>
-
-            <button onClick={removerPost}>
-                Excluir
-            </button>
-
-            <button onClick={editarPost}>
-                Editar
-            </button>
-
-            {curtidas > 10 ? <p>Post Popular!</p> : null}
-        </div>
+                <Button onClick={removerPost} variant="danger" size="sm">Excluir</Button>
+                <Button onClick={editarPost} variant="warning" size="sm">Editar</Button>
+            </Card.Body>
+        </Card>
     );
 }
 
